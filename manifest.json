@@ -1,0 +1,17 @@
+{
+  "exec": "./hls_ffmpeg.sh",
+  "player": "./player.html",
+
+  "transport": "stdout",
+  "serialize": "mjpeg",
+
+  "support": {
+		"addr": "rtsp://",
+    "archive": "*"
+  },
+
+  "variables": [
+		{ "name": "framerate", "default": "5", "label": "Frame Rate", "type":"number" },
+		{ "name": "desc", "value": "HLS (HTTP Live Streaming) low latency video streaming protocol", "readonly": true, "system": true, "type":"hidden"}
+	]
+}

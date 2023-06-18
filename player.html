@@ -1,0 +1,58 @@
+<video id="hls{{camera.name}}" class="hls-player" autoplay playsinline preload="none">
+  <!-- <source type="application/x-mpegURL"> -->
+</video>
+
+
+
+<script src="{{HOST}}/{{camera.module_path}}/video.min.js"></script>
+<script type="application/javascript" defer>
+
+  loadInterval = window.setInterval(() => {
+    try {
+      if (!videojs) return
+    } catch {
+      return
+    }
+
+    window.clearInterval(this.loadInterval)
+
+    console.log("start HLS  player: {{camera.name}}")
+
+    const player = videojs("hls{{camera.name}}", { controls: false });
+    player.src({
+      src: '{{{HOST}}}/video/{{camera.name}}/index.m3u8?{{camera.started_at}}',
+      type: 'application/x-mpegURL',
+      withCredentials: true
+    });
+
+
+    window.unmountPlayers["{{camera.id}}"] = () => {
+      console.log("stop HLS player: {{camera.name}}")
+      player.dispose()
+    }
+  }, 100)
+
+
+
+</script>
+
+<style>
+  .hls-player {
+    width: 100%;
+    height: auto !important;
+  }
+
+  .hls-player video {
+    display: block;
+    width: 100%;
+    border-radius: 6px;
+  }
+
+  .vjs-hidden,
+  .vjs-control-bar,
+  .vjs-loading-spinner,
+  .vjs-big-play-button,
+  .vjs-text-track-display {
+    display: none;
+  }
+</style>
